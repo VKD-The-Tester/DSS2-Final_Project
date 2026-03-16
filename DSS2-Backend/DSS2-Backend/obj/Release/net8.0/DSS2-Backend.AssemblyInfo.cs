@@ -13,9 +13,9 @@ using System.Reflection;
 
 [assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("d11615cd-94c7-47b2-b6e6-1ef2806e8ff9")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("DSS2-Backend")]
-[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+adc74e30758401d5084b974051acffdc51ee66bf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+06d76b82129fd563b158c543df6b04129ef45f44")]
 [assembly: System.Reflection.AssemblyProductAttribute("DSS2-Backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DSS2-Backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Victo\\source\\repos\\DSS2-Backend\\DSS2-Backend\\DSS2-Backend.csproj": {}
+    "C:\\Users\\Victo\\OneDrive\\Desktop\\DSS2-Final_Project\\DSS2-Backend\\DSS2-Backend\\DSS2-Backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Victo\\source\\repos\\DSS2-Backend\\DSS2-Backend\\DSS2-Backend.csproj": {
+    "C:\\Users\\Victo\\OneDrive\\Desktop\\DSS2-Final_Project\\DSS2-Backend\\DSS2-Backend\\DSS2-Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Victo\\source\\repos\\DSS2-Backend\\DSS2-Backend\\DSS2-Backend.csproj",
+        "projectUniqueName": "C:\\Users\\Victo\\OneDrive\\Desktop\\DSS2-Final_Project\\DSS2-Backend\\DSS2-Backend\\DSS2-Backend.csproj",
         "projectName": "DSS2-Backend",
-        "projectPath": "C:\\Users\\Victo\\source\\repos\\DSS2-Backend\\DSS2-Backend\\DSS2-Backend.csproj",
+        "projectPath": "C:\\Users\\Victo\\OneDrive\\Desktop\\DSS2-Final_Project\\DSS2-Backend\\DSS2-Backend\\DSS2-Backend.csproj",
         "packagesPath": "C:\\Users\\Victo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Victo\\source\\repos\\DSS2-Backend\\DSS2-Backend\\obj\\",
+        "outputPath": "C:\\Users\\Victo\\OneDrive\\Desktop\\DSS2-Final_Project\\DSS2-Backend\\DSS2-Backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
