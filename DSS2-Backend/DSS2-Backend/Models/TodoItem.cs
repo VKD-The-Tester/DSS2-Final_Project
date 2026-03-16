@@ -2,6 +2,11 @@
 {
     public class TodoItem
     {
+        public TodoItem()
+        {
+            this.CreatedAt = DateTime.UtcNow;
+        }
+
         public int Id { get; set; }
 
         public string Title { get; set; } = null!;
