@@ -2,6 +2,11 @@
 {
     public class User
     {
+        public User()
+        {
+            this.CreatedAt = DateTime.UtcNow;
+        }
+
         public int Id { get; set; }
 
         public string Email { get; set; } = null!;
