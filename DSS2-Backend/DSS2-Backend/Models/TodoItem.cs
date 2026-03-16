@@ -19,6 +19,10 @@
         public DateTime CreatedAt { get; private set; }
 
         public DateTime UpdatedAt { get; set; }
+
+        public virtual User User { get; set; } = null!;
+
+        public int UserId { get; set; }
     }
 
     public enum Priority { low = 1, medium = 2, high = 3 }
