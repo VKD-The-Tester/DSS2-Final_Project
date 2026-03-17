@@ -14,5 +14,7 @@
         public string PasswordHash { get; set; } = null!;
 
         public DateTime CreatedAt { get; private set; }
+
+        public virtual List<TodoItem>? TodoList { get; set; }
     }
 }
