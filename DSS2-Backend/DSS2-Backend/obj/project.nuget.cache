@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "uj4d4/3eth8=",
+  "dgSpecHash": "f/Kbffggxgc=",
   "success": true,
   "projectFilePath": "C:\\Users\\Victo\\OneDrive\\Desktop\\DSS2-Final_Project\\DSS2-Backend\\DSS2-Backend\\DSS2-Backend.csproj",
   "expectedPackageFiles": [
@@ -38,6 +38,7 @@
     "C:\\Users\\Victo\\.nuget\\packages\\microsoft.openapi\\1.6.14\\microsoft.openapi.1.6.14.nupkg.sha512",
     "C:\\Users\\Victo\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.22.1\\microsoft.visualstudio.azure.containers.tools.targets.1.22.1.nupkg.sha512",
     "C:\\Users\\Victo\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\Victo\\.nuget\\packages\\npgsql\\8.0.9\\npgsql.8.0.9.nupkg.sha512",
     "C:\\Users\\Victo\\.nuget\\packages\\swashbuckle.aspnetcore\\6.6.2\\swashbuckle.aspnetcore.6.6.2.nupkg.sha512",
     "C:\\Users\\Victo\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.6.2\\swashbuckle.aspnetcore.swagger.6.6.2.nupkg.sha512",
     "C:\\Users\\Victo\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.6.2\\swashbuckle.aspnetcore.swaggergen.6.6.2.nupkg.sha512",
