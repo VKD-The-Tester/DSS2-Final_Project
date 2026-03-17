@@ -13,7 +13,7 @@ namespace DSS2_Backend.Models
         [Key]
         public int Id { get; set; }
 
-        [EmailAddress(), Required]
+        [EmailAddress(ErrorMessage = "Incorrect email entered."), Required]
         public string Email { get; set; } = null!;
 
         [Required]
