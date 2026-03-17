@@ -15,7 +15,7 @@
 
         public Priority Priority { get; set; }
 
-        public string DueDate { get; set; } = null!;
+        public DateTime DueDate { get; set; }
 
         public bool IsCompleted { get; set; }
 
