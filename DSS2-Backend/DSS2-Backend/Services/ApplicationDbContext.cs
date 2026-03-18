@@ -1,6 +1,12 @@
-﻿namespace DSS2_Backend.Services
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace DSS2_Backend.Services
 {
-    public class ApplicationDbContext
+    public class ApplicationDbContext : DbContext
     {
+        public ApplicationDbContext(DbContextOptions options) : base(options)
+        {
+            
+        }
     }
 }
