@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DSS2_Backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DSS2_Backend.Services
 {
@@ -8,5 +9,9 @@ namespace DSS2_Backend.Services
         {
             
         }
+
+        public DbSet<TodoItem> TodoItems { get; set; }
+
+        public DbSet<User> Users { get; set; }
     }
 }
