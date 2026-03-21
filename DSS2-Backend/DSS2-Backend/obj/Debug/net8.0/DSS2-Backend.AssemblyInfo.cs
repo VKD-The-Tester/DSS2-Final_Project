@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DSS2-Backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c95c7bda69f10104f0405311daee718619091c18")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+79a7a31fa8a7b4aae8520ad29a50a09f790ff90d")]
 [assembly: System.Reflection.AssemblyProductAttribute("DSS2-Backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DSS2-Backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
