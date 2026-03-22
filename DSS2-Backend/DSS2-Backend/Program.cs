@@ -17,7 +17,7 @@ namespace DSS2_Backend
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             // Database Context Service
-            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql());
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("LocalDb")));
 
             var app = builder.Build();
 
