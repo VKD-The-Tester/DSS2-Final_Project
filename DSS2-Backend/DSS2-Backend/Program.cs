@@ -1,4 +1,7 @@
 
+using DSS2_Backend.Services;
+using Microsoft.EntityFrameworkCore;
+
 namespace DSS2_Backend
 {
     public class Program
@@ -13,6 +16,8 @@ namespace DSS2_Backend
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            // Database Context Service
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql());
 
             var app = builder.Build();
 
