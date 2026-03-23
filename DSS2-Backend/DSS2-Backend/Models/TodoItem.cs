@@ -11,7 +11,7 @@ namespace DSS2_Backend.Models
         }
 
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public string Title { get; set; } = null!;
@@ -41,7 +41,7 @@ namespace DSS2_Backend.Models
         public virtual User User { get; set; } = null!;
 
         [Required]
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
     }
 
     public enum Priority { low = 1, medium = 2, high = 3 }

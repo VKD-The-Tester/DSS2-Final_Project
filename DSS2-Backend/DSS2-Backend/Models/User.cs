@@ -11,7 +11,7 @@ namespace DSS2_Backend.Models
         }
 
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [EmailAddress(ErrorMessage = "The email format is invalid."), Required]
         public string Email { get; set; } = null!;
