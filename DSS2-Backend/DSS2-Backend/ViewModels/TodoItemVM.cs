@@ -22,5 +22,8 @@ namespace DSS2_Backend.ViewModels
 
         [Required]
         public bool IsPublic { get; set; }
+
+        [Required, DataType(DataType.DateTime)]
+        public DateTime UpdatedAt { get; set; }
     }
 }
