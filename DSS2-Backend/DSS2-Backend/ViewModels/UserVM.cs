@@ -2,6 +2,8 @@
 {
     public class UserVM
     {
+        public string Email { get; set; } = null!;
 
+        public string Password { get; set; } = null!;
     }
 }
