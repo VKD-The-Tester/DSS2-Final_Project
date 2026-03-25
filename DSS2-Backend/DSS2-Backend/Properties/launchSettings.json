@@ -1,5 +1,13 @@
 {
   "profiles": {
+    "Todo.Api": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:3087",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT" : "Development"
+      }
+    },
     "http": {
       "commandName": "Project",
       "launchBrowser": true,
@@ -8,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:3087"
+      "applicationUrl": "http://localhost:5029"
     },
     "https": {
       "commandName": "Project",
