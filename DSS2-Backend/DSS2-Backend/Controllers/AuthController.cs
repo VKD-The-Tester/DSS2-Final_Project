@@ -20,7 +20,12 @@ namespace DSS2_Backend.Controllers
         [HttpPost("register")]
         public ActionResult<RegisterResponseDto> register(RegisterRequestDto request)
         {
-            return Ok();
+            
+            // A new user will have to get created through the register method.
+            User user = new User();
+
+            // A 201 status code should return with the specified response data transfer object.
+            return Created();
         }
         
         [HttpPost("login")]
