@@ -23,6 +23,10 @@ namespace DSS2_Backend.Controllers
         [HttpPost("register")]
         public ActionResult<string> register(RegisterRequestDto request)
         {
+            /* userExists = _context.Users.FirstOrDefault(u => u.Email == request.Email);
+             * if(userExists) { return Conflict("A user already exists with this email.); }
+             */
+            
             // A new user will have to get created through the register method.
             User user = new User();
 
