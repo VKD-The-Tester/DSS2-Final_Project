@@ -1,2 +1,4 @@
 # The backend should ignore:
 DSS2-Backend/.vs/
+DSS2-Backend/DSS2-Backend/bin
+DSS2-Backend/DSS2-Backend/obj
