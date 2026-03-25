@@ -28,6 +28,11 @@ namespace DSS2_Backend
                 app.UseSwaggerUI();
             }
 
+            /* These two lines of code will ensure that when a PostgreSQL container is active,
+             * any changes/migrations will also be updated or tracked in the container. */
+            var context = app.Services.GetRequiredService<ApplicationDbContext>();
+            context.Database.Migrate();
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
