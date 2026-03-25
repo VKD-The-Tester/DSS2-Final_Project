@@ -22,6 +22,8 @@ namespace DSS2_Backend.Models
         [DataType(DataType.DateTime), Required]
         public DateTime CreatedAt { get; private set; }
 
+        public string? DisplayName { get; set; }
+
         public virtual List<TodoItem>? TodoList { get; set; }
     }
 }
