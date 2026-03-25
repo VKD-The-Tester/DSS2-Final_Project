@@ -12,11 +12,13 @@ namespace DSS2_Backend.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IPasswordService _passwordService;
+        private readonly ITokenService _tokenService;
         private readonly ApplicationDbContext _context;
 
-        public AuthController(IPasswordService passwordService, ApplicationDbContext context)
+        public AuthController(IPasswordService passwordService, ITokenService tokenService, ApplicationDbContext context)
         {
             this._passwordService = passwordService;
+            this._tokenService = tokenService;
             this._context = context;
         }
 
