@@ -16,7 +16,7 @@ namespace DSS2_Backend.Controllers
         public AuthController(IPasswordService passwordService, ApplicationDbContext context)
         {
             this._passwordService = passwordService;
-            _context = context;
+            this._context = context;
         }
 
         [HttpPost("register")]
