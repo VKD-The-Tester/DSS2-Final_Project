@@ -7,5 +7,16 @@ namespace DSS2_Backend.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        [HttpPost("register")]
+        public IActionResult register()
+        {
+            return Ok();
+        }
+        
+        [HttpPost("login")]
+        public IActionResult login()
+        {
+            return Ok();
+        }
     }
 }
