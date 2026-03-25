@@ -10,7 +10,7 @@ namespace DSS2_Backend.Services
         // A random 64-bit salt.
         private const string Salt = "V8fmyM/+36CprFeSXKXXTTVdnhKnqtTC7ERred3A3XmHh3J3hCZBD2Rn9n1U8ymy";
 
-        public string HashPassword(User user, UserDto request)
+        public string HashPassword(User user, RegisterRequestDto request)
         {
             string finalPassword = $"{Salt}{request.Password}{request.Email}";
 

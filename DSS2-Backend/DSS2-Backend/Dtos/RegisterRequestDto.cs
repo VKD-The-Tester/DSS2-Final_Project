@@ -1,6 +1,6 @@
 ﻿namespace DSS2_Backend.Dtos
 {
-    public class UserDto
+    public class RegisterRequestDto
     {
         public string Email { get; set; } = string.Empty;
 
