@@ -18,6 +18,8 @@ namespace DSS2_Backend
             builder.Services.AddSwaggerGen();
             // Database Context Service
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("LocalDb")));
+            // Password Service
+            builder.Services.AddSingleton<IPasswordService, PasswordService>();
 
             var app = builder.Build();
 
