@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DSS2_Backend.Dtos;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DSS2_Backend.Controllers
@@ -8,13 +9,13 @@ namespace DSS2_Backend.Controllers
     public class AuthController : ControllerBase
     {
         [HttpPost("register")]
-        public IActionResult register()
+        public IActionResult register(UserDto request)
         {
             return Ok();
         }
         
         [HttpPost("login")]
-        public IActionResult login()
+        public IActionResult login(UserDto request)
         {
             return Ok();
         }
