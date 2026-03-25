@@ -6,6 +6,6 @@
 
         public string Password { get; set; } = string.Empty;
 
-        public string? DisplayName { get; private set; }
+        public string? DisplayName { get; set; }
     }
 }
