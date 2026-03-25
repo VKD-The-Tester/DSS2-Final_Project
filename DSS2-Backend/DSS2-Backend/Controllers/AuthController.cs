@@ -10,7 +10,7 @@ namespace DSS2_Backend.Controllers
     public class AuthController : ControllerBase
     {
         [HttpPost("register")]
-        public ActionResult<User> register(RegisterRequestDto request)
+        public ActionResult<RegisterResponseDto> register(RegisterRequestDto request)
         {
             return Ok();
         }
