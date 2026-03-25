@@ -11,16 +11,17 @@ namespace DSS2_Backend.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IPasswordService _passwordService;
+        private readonly ApplicationDbContext _context;
 
-        public AuthController(IPasswordService passwordService)
+        public AuthController(IPasswordService passwordService, ApplicationDbContext context)
         {
             this._passwordService = passwordService;
+            _context = context;
         }
 
         [HttpPost("register")]
         public ActionResult<RegisterResponseDto> register(RegisterRequestDto request)
         {
-            
             // A new user will have to get created through the register method.
             User user = new User();
 
