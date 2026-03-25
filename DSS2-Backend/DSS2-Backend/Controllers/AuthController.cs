@@ -37,8 +37,8 @@ namespace DSS2_Backend.Controllers
             // The response will have to get serialized, to satisfy the requirements.
             string serializedResponse = JsonSerializer.Serialize(response);
 
-            // A 200 status code should return with the specified response data transfer object.
-            return Ok(serializedResponse);
+            // A 201 status code should return with the specified response data transfer object in JSON form.
+            return Created("", serializedResponse);
         }
         
         [HttpPost("login")]
