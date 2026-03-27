@@ -1,7 +1,6 @@
 ﻿using DSS2_Backend.Models;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 using System.Text;
 
 namespace DSS2_Backend.Services

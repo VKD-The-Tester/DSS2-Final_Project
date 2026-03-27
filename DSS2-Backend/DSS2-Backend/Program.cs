@@ -1,6 +1,9 @@
 
 using DSS2_Backend.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace DSS2_Backend
 {
@@ -13,15 +16,45 @@ namespace DSS2_Backend
             // Add services to the container.
 
             builder.Services.AddControllers();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
             // Database Context Service
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("LocalDb")));
-            // Password Service
+
+            // JSON Web Token Settings
+            IConfigurationSection jsonWebToken = builder.Configuration.GetSection("Jwt");
+            string issuer = jsonWebToken["Issuer"]!;
+            string audience = jsonWebToken["Audience"]!;
+            string key = jsonWebToken["Key"]!;
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidateLifetime = true,
+                        ValidIssuer = issuer,
+                        ValidAudience = audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+                        ClockSkew = TimeSpan.FromMinutes(1)
+                    };
+                });
+            
+            builder.Services.AddAuthorization();
+
+            // Authorization Services
             builder.Services.AddSingleton<IPasswordService, PasswordService>();
-            // Token Service
-            builder.Services.AddScoped<ITokenService, TokenService>();
+            builder.Services.AddSingleton<ITokenService, TokenService>();
+
+            // Reading claims in services
+            builder.Services.AddHttpContextAccessor();
+            
 
             var app = builder.Build();
 
