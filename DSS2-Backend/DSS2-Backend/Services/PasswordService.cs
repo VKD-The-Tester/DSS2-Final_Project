@@ -18,5 +18,15 @@ namespace DSS2_Backend.Services
 
             return hashedPassword;
         }
+
+        public bool VerifyPassword(User user, string hashedPassword)
+        {
+            if(new PasswordHasher<User>().VerifyHashedPassword(user, user.PasswordHash, hashedPassword) == PasswordVerificationResult.Failed)
+            {
+                return false;
+            }
+            
+           return true;
+        }
     }
 }
