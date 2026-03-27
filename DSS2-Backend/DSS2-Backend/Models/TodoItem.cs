@@ -11,13 +11,13 @@ namespace DSS2_Backend.Models
         }
 
         [Key]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
-        public string Title { get; set; } = null!;
+        public required string Title { get; set; } = null!;
 
         [Required]
-        public string Details { get; set; } = null!;
+        public required string Details { get; set; } = null!;
 
         [Required]
         public Priority Priority { get; set; }

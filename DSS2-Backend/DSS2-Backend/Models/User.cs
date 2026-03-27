@@ -11,19 +11,19 @@ namespace DSS2_Backend.Models
         }
 
         [Key]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         [EmailAddress(ErrorMessage = "The email format is invalid."), Required]
-        public string Email { get; set; } = null!;
+        public required string Email { get; set; } = null!;
 
         [Required]
-        public string PasswordHash { get; set; } = null!;
+        public required string PasswordHash { get; set; } = null!;
 
         [DataType(DataType.DateTime), Required]
         public DateTime CreatedAt { get; private set; }
 
-        public string? DisplayName { get; set; }
+        public string? DisplayName { get; set; } = string.Empty;
 
-        public virtual List<TodoItem>? TodoList { get; set; }
+        public virtual List<TodoItem>? TodoList { get; set; } = new List<TodoItem>();
     }
 }
