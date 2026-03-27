@@ -6,15 +6,15 @@ namespace DSS2_Backend.ViewModels
     public class TodoItemVM
     {
         [Required]
-        public string Title { get; set; } = null!;
+        public required string Title { get; set; }
 
         [Required]
-        public string Details { get; set; } = null!;
+        public required string Details { get; set; }
 
         [Required]
         public Priority Priority { get; set; }
 
-        [Required, DataType(DataType.DateTime)]
+        [Required]
         public DateTime DueDate { get; set; }
 
         [Required]
@@ -23,7 +23,7 @@ namespace DSS2_Backend.ViewModels
         [Required]
         public bool IsPublic { get; set; }
 
-        [Required, DataType(DataType.DateTime)]
-        public DateTime UpdatedAt { get; set; }
+        [Required]
+        public DateTime? UpdatedAt { get; set; }
     }
 }

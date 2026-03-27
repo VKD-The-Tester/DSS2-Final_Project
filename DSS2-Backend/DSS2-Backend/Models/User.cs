@@ -5,25 +5,20 @@ namespace DSS2_Backend.Models
 {
     public class User
     {
-        public User()
-        {
-            this.CreatedAt = DateTime.UtcNow;
-        }
-
         [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; private set; } = Guid.NewGuid();
 
         [EmailAddress(ErrorMessage = "The email format is invalid."), Required]
-        public required string Email { get; set; } = null!;
+        public required string Email { get; set; }
 
         [Required]
-        public required string PasswordHash { get; set; } = null!;
+        public required string PasswordHash { get; set; }
 
-        [DataType(DataType.DateTime), Required]
-        public DateTime CreatedAt { get; private set; }
+        [Required]
+        public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
 
-        public string? DisplayName { get; set; } = string.Empty;
+        public string? DisplayName { get; set; } = null;
 
-        public virtual List<TodoItem>? TodoList { get; set; } = new List<TodoItem>();
+        public virtual List<TodoItem> TodoList { get; set; } = new List<TodoItem>();
     }
 }

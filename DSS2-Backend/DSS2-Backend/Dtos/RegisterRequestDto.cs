@@ -1,11 +1,15 @@
-﻿namespace DSS2_Backend.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DSS2_Backend.Dtos
 {
     public class RegisterRequestDto
     {
-        public required string Email { get; set; } = null!;
+        [Required, EmailAddress]
+        public required string Email { get; set; }
 
-        public required string Password { get; set; } = null!;
+        [Required, DataType(DataType.Password)]
+        public required string Password { get; set; }
 
-        public string? DisplayName { get; set; } = string.Empty;
+        public string? DisplayName { get; set; } = null;
     }
 }
