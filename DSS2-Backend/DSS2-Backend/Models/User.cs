@@ -19,6 +19,11 @@ namespace DSS2_Backend.Models
 
         public string? DisplayName { get; set; } = null;
 
+        [Required]
+        public Roles Roles { get; set; } = Roles.User;
+
         public virtual List<TodoItem> TodoList { get; set; } = new List<TodoItem>();
     }
+
+    public enum Roles { User = 1, Guest = 2 }
 }
