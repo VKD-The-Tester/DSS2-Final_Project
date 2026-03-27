@@ -4,7 +4,7 @@ namespace DSS2_Backend.Dtos
 {
     public class RegisterRequestDto
     {
-        [Required, EmailAddress]
+        [Required, EmailAddress(ErrorMessage = "The email format is invalid.")]
         public required string Email { get; set; }
 
         [Required, DataType(DataType.Password)]
