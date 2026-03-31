@@ -6,8 +6,8 @@ namespace DSS2_Backend.Services
 {
     public interface IPasswordService
     {
-        string HashPassword(User user, RegisterRequestDto request);
+        string HashPassword(RegisterRequestDto request);
 
-        bool VerifyPassword(User user, string passwordHash);
+        bool VerifyPassword(User user, LoginRequestDto request);
     }
 }

@@ -1,27 +1,21 @@
 ﻿using DSS2_Backend.Dtos;
 using DSS2_Backend.Models;
-using DSS2_Backend.ViewModels;
 using Microsoft.AspNetCore.Identity;
 
 namespace DSS2_Backend.Services
 {
     public class PasswordService : IPasswordService
     {
-        // A random 64-bit salt.
-        private const string Salt = "V8fmyM/+36CprFeSXKXXTTVdnhKnqtTC7ERred3A3XmHh3J3hCZBD2Rn9n1U8ymy";
-
-        public string HashPassword(User user, RegisterRequestDto request)
+        public string HashPassword(RegisterRequestDto request)
         {
-            string finalPassword = $"{Salt}{request.Password}{request.Email}";
-
-            var hashedPassword = new PasswordHasher<User>().HashPassword(user, finalPassword);
+            var hashedPassword = new PasswordHasher<RegisterRequestDto>().HashPassword(request, request.Password);
 
             return hashedPassword;
         }
 
-        public bool VerifyPassword(User user, string hashedPassword)
+        public bool VerifyPassword(User user, LoginRequestDto request)
         {
-            if(new PasswordHasher<User>().VerifyHashedPassword(user, user.PasswordHash, hashedPassword) == PasswordVerificationResult.Failed)
+            if (new PasswordHasher<User>().VerifyHashedPassword(user, user.PasswordHash, request.Password) == PasswordVerificationResult.Failed)
             {
                 return false;
             }

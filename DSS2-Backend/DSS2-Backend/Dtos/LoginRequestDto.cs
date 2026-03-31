@@ -7,7 +7,7 @@ namespace DSS2_Backend.Dtos
         [Required, EmailAddress(ErrorMessage = "The email format is invalid.")]
         public required string Email { get; set; }
 
-        [Required, DataType(DataType.Password)]
+        [Required]
         public required string Password { get; set; }
     }
 }

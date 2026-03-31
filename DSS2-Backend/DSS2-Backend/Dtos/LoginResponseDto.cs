@@ -8,11 +8,6 @@
 
         public int ExpiresInSeconds { get; set; }
 
-        public Dictionary<string,  string> User { get; set; } = new Dictionary<string, string>
-        {
-            {"id", "Required" },
-            {"email", "Required" },
-            {"displayName", "Optional Name" }
-        };
+        public Dictionary<string, string> User { get; set; } = null!;
     }
 }
