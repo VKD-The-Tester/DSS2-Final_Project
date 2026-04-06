@@ -54,8 +54,10 @@ namespace DSS2_Backend
 
             // Reading claims in services
             builder.Services.AddHttpContextAccessor();
-            
 
+            // Lowercase URLS
+            builder.Services.AddRouting(options => options.LowercaseUrls = true);
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
