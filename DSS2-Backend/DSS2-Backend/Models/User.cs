@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DSS2_Backend.Models
 {
@@ -8,22 +7,20 @@ namespace DSS2_Backend.Models
         [Key]
         public Guid Id { get; private set; } = Guid.NewGuid();
 
-        [EmailAddress(ErrorMessage = "The email format is invalid."), Required]
-        public required string Email { get; set; }
+        [EmailAddress, Required, MaxLength(254)]
+        public string Email { get; set; } = null!;
 
         [Required]
-        public required string PasswordHash { get; set; }
+        public string PasswordHash { get; set; } = null!;
 
-        [Required]
         public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
 
-        public string? DisplayName { get; set; } = null;
+        public string? DisplayName { get; set; }
 
-        [Required]
-        public Roles Roles { get; set; } = Roles.User;
+        public Roles Roles { get; private set; } = Roles.User;
 
         public virtual List<TodoItem> TodoList { get; set; } = new List<TodoItem>();
     }
 
-    public enum Roles { User = 1, Guest = 2 }
+    public enum Roles {User = 1, Guest = 2}
 }

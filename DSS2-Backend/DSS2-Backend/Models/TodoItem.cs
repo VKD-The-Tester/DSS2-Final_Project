@@ -9,35 +9,27 @@ namespace DSS2_Backend.Models
         public Guid Id { get; private set; } = Guid.NewGuid();
 
         [Required]
-        public required string Title { get; set; }
+        public string Title { get; set; } = null!;
 
-        [Required]
-        public required string Details { get; set; }
+        public string? Details { get; set; }
 
-        [Required]
         public Priority Priority { get; set; }
 
-        [Required]
-        public DateTime DueDate { get; set; }
+        public DateTime? DueDate { get; set; }
 
-        [Required]
         public bool IsCompleted { get; set; } = false;
 
-        [Required]
         public bool IsPublic { get; set; } = false;
 
-        [Required]
         public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
 
-        [Required]
-        public DateTime? UpdatedAt { get; set; } = null;
+        public DateTime? UpdatedAt { get; set; }
 
-        [Required]
         public Guid UserId { get; set; }
 
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; } = null!;
     }
 
-    public enum Priority { low = 1, medium = 2, high = 3 }
+    public enum Priority { Low = 1, Medium = 2, High = 3 }
 }
