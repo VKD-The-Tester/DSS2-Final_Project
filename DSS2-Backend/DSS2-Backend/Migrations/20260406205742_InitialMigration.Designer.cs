@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DSS2_Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260327155422_Initial")]
-    partial class Initial
+    [Migration("20260406205742_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,10 +35,9 @@ namespace DSS2_Backend.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Details")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("DueDate")
+                    b.Property<DateTime?>("DueDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsCompleted")
@@ -47,15 +46,15 @@ namespace DSS2_Backend.Migrations
                     b.Property<bool>("IsPublic")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("Priority")
-                        .HasColumnType("integer");
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .IsRequired()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("UserId")
@@ -65,7 +64,7 @@ namespace DSS2_Backend.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TodoItems");
+                    b.ToTable("Todos");
                 });
 
             modelBuilder.Entity("DSS2_Backend.Models.User", b =>
@@ -82,14 +81,16 @@ namespace DSS2_Backend.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(254)
+                        .HasColumnType("character varying(254)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Roles")
-                        .HasColumnType("integer");
+                    b.Property<string>("Roles")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
