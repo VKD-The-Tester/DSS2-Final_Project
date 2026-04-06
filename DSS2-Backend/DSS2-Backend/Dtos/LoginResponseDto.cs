@@ -1,13 +1,19 @@
-﻿namespace DSS2_Backend.Dtos
+﻿using System.Text.Json.Serialization;
+
+namespace DSS2_Backend.Dtos
 {
     public class LoginResponseDto
     {
-        public required string AccessToken {  get; set; }
+        [JsonPropertyName("accessToken")]
+        public string AccessToken { get; set; } = null!;
 
-        public required string TokenType { get; set; }
+        [JsonPropertyName("tokenType")]
+        public string TokenType { get; set; } = null!;
 
+        [JsonPropertyName("expiresInSeconds")]
         public int ExpiresInSeconds { get; set; }
 
+        [JsonPropertyName("user")]
         public Dictionary<string, string> User { get; set; } = null!;
     }
 }

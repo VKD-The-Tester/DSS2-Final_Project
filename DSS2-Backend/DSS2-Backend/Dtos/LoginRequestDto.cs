@@ -1,13 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace DSS2_Backend.Dtos
 {
     public class LoginRequestDto
     {
-        [Required, EmailAddress(ErrorMessage = "The email format is invalid.")]
-        public required string Email { get; set; }
+        [EmailAddress(ErrorMessage = "The email format is invalid."), JsonPropertyName("email")]
+        public string Email { get; set; } = null!;
 
-        [Required]
-        public required string Password { get; set; }
+        [JsonPropertyName("password")]
+        public string Password { get; set; } = null!;
     }
 }
