@@ -2,7 +2,7 @@
 using DSS2_Backend.Models;
 using DSS2_Backend.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace DSS2_Backend.Controllers
 {
@@ -10,7 +10,6 @@ namespace DSS2_Backend.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        // TODO: Fix the VerifiedPassword method.
         private readonly IPasswordService _passwordService;
         private readonly ITokenService _tokenService;
         private readonly IConfiguration _configuration;
@@ -25,11 +24,16 @@ namespace DSS2_Backend.Controllers
         }
 
         [HttpPost("register")]
-        public ActionResult Register(RegisterRequestDto request)
+        public async Task<ActionResult<AuthUserResponseDto>> Register(RegisterRequestDto request)
         {
-            if (_context.Users.FirstOrDefault(u => u.Email == request.Email) != null) 
+            if (await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email) != null) 
             {
-                return Conflict("A user is already registered with this email.");
+                return Conflict(new ProblemDetails
+                {
+                    Type = "https://httpstatuses.com/409",
+                    Title = "Validation Failed",
+                    Status = 409
+                });
             }
 
             var hashedPassword = _passwordService.HashPassword(request);
@@ -37,38 +41,45 @@ namespace DSS2_Backend.Controllers
             User newUser = new User { 
                 Email =  request.Email,
                 PasswordHash = hashedPassword,
-                DisplayName = request.DisplayName,
-                Roles = Roles.User,
+                DisplayName = request.DisplayName
             };
 
-            _context.Users.Add(newUser);
+            await _context.Users.AddAsync(newUser);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            RegisterResponseDto response = new RegisterResponseDto { 
+            AuthUserResponseDto response = new AuthUserResponseDto { 
                 Email = request.Email, 
                 DisplayName = request.DisplayName,
                 Id = newUser.Id
             };
            
-            var serializedResponse = JsonSerializer.Serialize(response);
-
-            return Created("", serializedResponse);
+            return Created("", response);
         }
         
         [HttpPost("login")]
-        public ActionResult Login(LoginRequestDto request)
+        public async Task<ActionResult<LoginResponseDto>> Login(LoginRequestDto request)
         {
-            var existingUser = _context.Users.FirstOrDefault(u => u.Email == request.Email);
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
 
             if (existingUser == null)
             {
-                return BadRequest("There is no account registered under this email address.");
+                return BadRequest(new ProblemDetails
+                {
+                    Type = "https://httpstatuses.com/400",
+                    Title = "Validation Failed",
+                    Status = 400
+                });
             }
 
             if(_passwordService.VerifyPassword(existingUser, request) == false)
             {
-                return Unauthorized("The provided password is incorrect.");
+                return Unauthorized(new ProblemDetails
+                {
+                    Type = "https://httpstatuses.com/401",
+                    Title = "Validation Failed",
+                    Status = 401
+                });
             }
 
             var token = _tokenService.CreateAccessToken(existingUser);
@@ -98,9 +109,7 @@ namespace DSS2_Backend.Controllers
                 User = userDetails
             };
 
-            var serializedResponse = JsonSerializer.Serialize(response);
-
-            return Ok(serializedResponse);
+            return Ok(response);
         }
     }
 }
