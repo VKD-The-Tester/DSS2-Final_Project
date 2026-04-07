@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace DSS2_Backend.Dtos
 {
-    public class ListingDto
+    public class QueryParamDto
     {
         [JsonPropertyName("page"), MinLength(1)]
         public int Page { get; set; } = 1;
