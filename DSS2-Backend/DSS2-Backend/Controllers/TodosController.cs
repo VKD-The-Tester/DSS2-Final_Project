@@ -3,6 +3,7 @@ using DSS2_Backend.Models;
 using DSS2_Backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace DSS2_Backend.Controllers
 {
@@ -11,16 +12,18 @@ namespace DSS2_Backend.Controllers
     public class TodosController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IQueryParamService _queryParam;
 
-        public TodosController(ApplicationDbContext context)
+        public TodosController(ApplicationDbContext context, IQueryParamService queryParam)
         {
             this._context = context;
+            this._queryParam = queryParam;
         }
 
-        [HttpGet("public")]
-        public async Task<ActionResult<PaginationResponseDto>> GetPublicTodos([FromQuery] ListingDto request)
+        [HttpGet("public"), AllowAnonymous]
+        public ActionResult<PaginationResponseDto> GetPublicTodos([FromQuery] QueryParamDto request)
         {
-            var isPublicTodos = _context.Todos.Where(t => t.IsPublic == true).ToList();
+            List<TodoItem>? isPublicTodos = _context.Todos.Where(t => t.IsPublic == true).ToList();
 
             List<TodoResponseDto> todoList = new List<TodoResponseDto>();
 
@@ -40,72 +43,27 @@ namespace DSS2_Backend.Controllers
                 });
             }
 
-            // Filtering operations based on the provided query parameters.
-            if (request.Status == "active")
-            {
-                todoList = todoList.Where(t => t.IsCompleted == false).ToList();
-            }
+            // Filtering the todos based on the status.
+            todoList = _queryParam.FilterByStatus(todoList, request.Status).ToList();
 
-            if (request.Status == "completed")
-            {
-                todoList = todoList.Where(t => t.IsCompleted == true).ToList();
-            }
-
-            switch (request.Priority)
-            {
-                case "low":
-                    todoList = todoList.Where(t => t.Priority == Priority.Low).ToList();
-                    break;
-                case "medium":
-                    todoList = todoList.Where(t => t.Priority == Priority.Medium).ToList();
-                    break;
-                case "high":
-                    todoList = todoList.Where(t => t.Priority == Priority.High).ToList();
-                    break;
-                default:
-                    break;
-            }
+            // Filtering the todos based on their priority.
+            todoList = _queryParam.FilterByPriority(todoList, request.Priority).ToList();
 
             // Date range operations
-            if (request.DueFrom != null)
-            {
-                todoList = todoList.Where(t => t.DueDate >= request.DueFrom).ToList();
-            }
+            todoList = _queryParam.DueFrom(todoList, request.DueFrom).ToList();
 
-            if (request.DueTo != null)
-            {
-                todoList = todoList.Where(t => t.DueDate <= request.DueTo).ToList();
-            }
-
+            todoList = _queryParam.DueTo(todoList, request.DueTo).ToList();
+            
             // Sorting operations based on the provided query parameters.
-            switch (request.SortBy)
-            {
-                case "dueDate":
-                    todoList = todoList.OrderBy(t => t.DueDate).ToList();
-                    break;
-                case "priority":
-                    todoList = todoList.OrderBy(t => t.Priority).ToList();
-                    break;
-                case "title":
-                    todoList = todoList.OrderBy(t => t.Title).ToList();
-                    break;
-                default:
-                    break;
-            }
+            todoList = _queryParam.SortByProperty(todoList, request.SortBy).ToList();
 
-            if (request.SortDir == "asc")
-            {
-                todoList.OrderBy(t => t);
-            }
+            todoList = _queryParam.SortByDirection(todoList, request.SortDir).ToList();
 
             // Search Operation
-            if (request.Search != null)
-            {
-                todoList = (List<TodoResponseDto>)todoList.Where(t => t.Title.Contains(request.Search, StringComparison.OrdinalIgnoreCase));
-            }
+            todoList = _queryParam.Search(todoList, request.Search).ToList();
 
             // Applying Pagination
-            var todosPerPage = todoList.Skip((request.Page - 1) * request.PageSize).Take(request.PageSize).ToList();
+            var todosPerPage = _queryParam.ApplyPagination(todoList, request.Page, request.PageSize).ToList();
 
             var response = new PaginationResponseDto
             {
@@ -120,8 +78,20 @@ namespace DSS2_Backend.Controllers
         }
 
         [HttpGet, Authorize]
-        public ActionResult<List<TodoResponseDto>> GetUserTodos([FromQuery] ListingDto request)
+        public ActionResult<List<PaginationResponseDto>> GetUserTodos([FromQuery] QueryParamDto request)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(new ProblemDetails
+                {
+                    Type = "https://httpstatuses.com/401",
+                    Title = "Validation Failed",
+                    Status = 401
+                });
+            }
+
             var isPrivateTodos = _context.Todos.Where(t => t.IsPublic == false).ToList();
 
             List<TodoResponseDto> todoList = new List<TodoResponseDto>();
@@ -142,74 +112,31 @@ namespace DSS2_Backend.Controllers
                 });
             }
 
-            // Filtering operations based on the provided query parameters.
-            if (request.Status == "active")
-            {
-                todoList = todoList.Where(t => t.IsCompleted == false).ToList();   
-            }
+            // Filtering the todos based on the status.
+            todoList = _queryParam.FilterByStatus(todoList, request.Status).ToList();
 
-            if (request.Status == "completed")
-            {
-                todoList = todoList.Where(t => t.IsCompleted == true).ToList();
-            }
-
-            switch (request.Priority)
-            {
-                case "low":
-                    todoList = todoList.Where(t => t.Priority == Priority.Low).ToList();
-                    break;
-                case "medium":
-                    todoList = todoList.Where(t => t.Priority == Priority.Medium).ToList();
-                    break;
-                case "high":
-                    todoList = todoList.Where(t => t.Priority == Priority.High).ToList();
-                    break;
-                default:
-                    break;
-            }
+            // Filtering the todos based on their priority.
+            todoList = _queryParam.FilterByPriority(todoList, request.Priority).ToList();
 
             // Date range operations
-            if (request.DueFrom != null) 
-            { 
-                todoList = todoList.Where(t => t.DueDate >=  request.DueFrom).ToList();
-            }
+            todoList = _queryParam.DueFrom(todoList, request.DueFrom).ToList();
 
-            if (request.DueTo != null) 
-            { 
-                todoList = todoList.Where(t => t.DueDate <= request.DueTo).ToList();
-            }
+            todoList = _queryParam.DueTo(todoList, request.DueTo).ToList();
 
             // Sorting operations based on the provided query parameters.
-            switch (request.SortBy)
-            {
-                case "dueDate":
-                    todoList = todoList.OrderBy(t => t.DueDate).ToList();
-                    break;
-                case "priority":
-                    todoList = todoList.OrderBy(t => t.Priority).ToList();
-                    break;
-                case "title":
-                    todoList = todoList.OrderBy(t => t.Title).ToList(); 
-                    break;
-                default : 
-                    break;
-            }
+            todoList = _queryParam.SortByProperty(todoList, request.SortBy).ToList();
 
-            if (request.SortDir == "asc")
-            {
-                todoList.OrderBy(t => t);
-            }
+            todoList = _queryParam.SortByDirection(todoList, request.SortDir).ToList();
 
             // Search Operation
-            if (request.Search != null) 
-            {
-                todoList = (List<TodoResponseDto>)todoList.Where(t => t.Title.Contains(request.Search, StringComparison.OrdinalIgnoreCase));
-            }
+            todoList = _queryParam.Search(todoList, request.Search).ToList();
 
+            // Applying Pagination
+            var todosPerPage = _queryParam.ApplyPagination(todoList, request.Page, request.PageSize).ToList();
 
             var response = new PaginationResponseDto
             {
-                Items = todoList,
+                Items = todosPerPage,
                 Page = request.Page,
                 PageSize = request.PageSize,
                 TotalItems = todoList.Count,
@@ -223,6 +150,18 @@ namespace DSS2_Backend.Controllers
         [HttpPost, Authorize]
         public async Task<IActionResult> CreateTodo(CreateTodoRequestDto request)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(new ProblemDetails
+                {
+                    Type = "https://httpstatuses.com/401",
+                    Title = "Validation Failed",
+                    Status = 401
+                });
+            }
+
             var todo = new TodoItem
             {
                 Title = request.Title,
@@ -230,6 +169,7 @@ namespace DSS2_Backend.Controllers
                 Priority = request.Priority,
                 DueDate = request.DueDate,
                 IsPublic = request.IsPublic,
+                UserId = Guid.Parse(userId)
             };
 
             await _context.Todos.AddAsync(todo);
@@ -242,6 +182,18 @@ namespace DSS2_Backend.Controllers
         [HttpGet("{id:guid}"), Authorize]
         public IActionResult GetTodoById(Guid id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(new ProblemDetails
+                {
+                    Type = "https://httpstatuses.com/401",
+                    Title = "Validation Failed",
+                    Status = 401
+                });
+            }
+
             var existingTodo = _context.Todos.FirstOrDefault(t => t.Id == id);
 
             if (existingTodo == null)
@@ -274,6 +226,18 @@ namespace DSS2_Backend.Controllers
         [HttpPut("{id:guid}"), Authorize]
         public async Task<IActionResult> UpdateUserTodo(Guid id, UpdateTodoRequestDto request) 
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(new ProblemDetails
+                {
+                    Type = "https://httpstatuses.com/401",
+                    Title = "Validation Failed",
+                    Status = 401
+                });
+            }
+
             var todoExists = await _context.Todos.FindAsync(id);
 
             if (todoExists == null) 
@@ -300,7 +264,19 @@ namespace DSS2_Backend.Controllers
 
         [HttpPatch("{id:guid}/completion"), Authorize]
         public async Task<IActionResult> UpdateIsCompleted(Guid id, SetCompletionRequestDto setCompletion) 
-        { 
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(new ProblemDetails
+                {
+                    Type = "https://httpstatuses.com/401",
+                    Title = "Validation Failed",
+                    Status = 401
+                });
+            }
+
             var todoExists = await _context.FindAsync<TodoItem>(id);
 
             if (todoExists == null) 
@@ -323,6 +299,18 @@ namespace DSS2_Backend.Controllers
         [HttpDelete("{id:guid}"), Authorize]
         public async Task<IActionResult> DeleteUserTodo(Guid id) 
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(new ProblemDetails
+                {
+                    Type = "https://httpstatuses.com/401",
+                    Title = "Validation Failed",
+                    Status = 401
+                });
+            }
+
             var todoExists = await _context.Todos.FindAsync(id);
 
             if (todoExists == null) 
