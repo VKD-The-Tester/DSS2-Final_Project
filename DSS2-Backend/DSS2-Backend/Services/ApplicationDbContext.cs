@@ -16,8 +16,6 @@ namespace DSS2_Backend.Services
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().Property(u => u.Roles).HasConversion<string>();
-
             modelBuilder.Entity<TodoItem>().Property(t => t.Priority).HasConversion<string>();
         }
     }
