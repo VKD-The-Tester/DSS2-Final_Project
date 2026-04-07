@@ -5,10 +5,10 @@ namespace DSS2_Backend.Dtos
 {
     public class QueryParamDto
     {
-        [JsonPropertyName("page"), MinLength(1)]
+        [JsonPropertyName("page"), Range(1, int.MaxValue)]
         public int Page { get; set; } = 1;
 
-        [JsonPropertyName("pageSize"), Length(1, 50)]
+        [JsonPropertyName("pageSize"), Range(1, 50)]
         public int PageSize { get; set; } = 10;
 
         [JsonPropertyName("status"), RegularExpression("^(all|active|completed)$")]
