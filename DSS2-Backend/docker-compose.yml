@@ -1,0 +1,39 @@
+# docker-compose up --build -d
+services:
+  dss2-backend:
+    image: ${DOCKER_REGISTRY-}dss2backend
+    build:
+      context: .
+      dockerfile: DSS2-Backend/Dockerfile
+    depends_on:
+        - postgresdb
+        - pgadmin
+    ports:
+        - "5000:5000"
+        - "5001:5001"
+  postgresdb:
+    image: postgres:latest
+    restart: always
+    ports:
+        - "5432:5432"
+    environment:
+        POSTGRES_DB: TodoDb
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: password@123
+    volumes:
+        - pgdata:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+        - "8082:80"
+    environment:
+        PGADMIN_DEFAULT_EMAIL: heyib53281@gmail.com
+        PGADMIN_DEFAULT_PASSWORD: Test@123
+    volumes:
+        - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  pgdata:
+  pgadmin-data:  
+        
